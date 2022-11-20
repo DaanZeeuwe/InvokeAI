@@ -22,10 +22,9 @@ model:
       target: ldm.modules.embedding_manager.EmbeddingManager
       params:
         placeholder_strings: ["*"]
-        initializer_words: ["sculpture"]
+        initializer_words: ["painting"]
         per_image_tokens: false
         num_vectors_per_token: 1
-        progressive_words: False
 
     unet_config:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
@@ -73,18 +72,18 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 1
-    num_workers: 2
+    batch_size: 2
+    num_workers: 16
     wrap: false
     train:
-      target: ldm.data.personalized.PersonalizedBase
+      target: ldm.data.personalized_style.PersonalizedBase
       params:
         size: 512
         set: train
         per_image_tokens: false
         repeats: 100
     validation:
-      target: ldm.data.personalized.PersonalizedBase
+      target: ldm.data.personalized_style.PersonalizedBase
       params:
         size: 512
         set: val
@@ -92,9 +91,6 @@ data:
         repeats: 10
 
 lightning:
-  modelcheckpoint:
-    params:
-      every_n_train_steps: 500
   callbacks:
     image_logger:
       target: main.ImageLogger
@@ -105,6 +101,3 @@ lightning:
 
   trainer:
     benchmark: True
-    max_steps: 4000
-#    max_steps: 4000
-    

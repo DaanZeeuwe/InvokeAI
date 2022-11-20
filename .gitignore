@@ -1,6 +1,6 @@
 # ignore default image save location and model symbolic link
 outputs/
-models/ldm/stable-diffusion-v1/model.ckpt
+
 **/restoration/codeformer/weights
 
 # ignore user models config
